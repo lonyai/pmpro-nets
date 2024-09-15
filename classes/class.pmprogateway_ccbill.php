@@ -2,7 +2,7 @@
 
 //load classes init method
 add_action('init', array('PMProGateway_CCBill', 'init'));
-add_filter('pmpro_is_ready', array( 'PMProGateway_CCBill', 'pmpro_is_ccbill_ready' ), 999, 1 );
+add_filter('pmpro_is_ready', array( 'PMProGateway_CCBill', 'pmpro_is_nets_ready' ), 999, 1 );
 
 class PMProGateway_CCBill extends PMProGateway {
 
@@ -104,14 +104,14 @@ class PMProGateway_CCBill extends PMProGateway {
 	/**
 	 * Check if all fields are complete
 	 */
-	static function pmpro_is_ccbill_ready( $ready ){
+	static function pmpro_is_nets_ready( $ready ){
 
-		if ( get_option('pmpro_ccbill_account_number') == "" ||
-		get_option('pmpro_ccbill_subaccount_number') == "" ||
-		get_option('pmpro_ccbill_flex_form_id') == "" ||
-		get_option('pmpro_ccbill_salt') == "" ||
-		get_option('pmpro_ccbill_datalink_username') == "" ||
-		get_option('pmpro_ccbill_datalink_password') == "" ){
+		if ( get_option('pmpro_nets_account_number') == "" ||
+		get_option('pmpro_nets_subaccount_number') == "" ||
+		get_option('pmpro_nets_flex_form_id') == "" ||
+		get_option('pmpro_nets_salt') == "" ||
+		get_option('pmpro_nets_datalink_username') == "" ||
+		get_option('pmpro_nets_datalink_password') == "" ){
 			$ready = false;
 		} else {
 			$ready = true;
@@ -132,7 +132,7 @@ class PMProGateway_CCBill extends PMProGateway {
 		<td colspan="2">
 			<h2><?php esc_html_e('CCBill Settings', 'pmpro-ccbill' ); ?></h2>
 			<div class="notice notice-large notice-warning inline">
-					<p class="pmpro_ccbill_notice">
+					<p class="pmpro_nets_notice">
 						<strong><?php esc_html_e( 'Paid Memberships Pro: CCBill is currently in Beta.', 'pmpro-ccbill' ); ?></strong><br />								
 						<a href="https://www.paidmembershipspro.com/add-ons/ccbill/" target="_blank"><?php esc_html_e( 'Read the documentation on getting started with Paid Memberships Pro CCBill &raquo;', 'pmpro-ccbill' ); ?></a>
 					</p>
@@ -295,7 +295,7 @@ class PMProGateway_CCBill extends PMProGateway {
 			$currency_code = PMProGateway_CCBill::get_currency_code();
 		}
 		if( empty( $salt ) ) {
-			$salt = get_option('pmpro_ccbill_salt');
+			$salt = get_option('pmpro_nets_salt');
 		}
 		
 		$initial_price = number_format($initial_price , 2, ".","");
@@ -397,10 +397,10 @@ class PMProGateway_CCBill extends PMProGateway {
 
 		//get the options
 
-		$ccbill_account_number = get_option('pmpro_ccbill_account_number');
-		$ccbill_subaccount_number = get_option('pmpro_ccbill_subaccount_number');
-		$ccbill_flex_form_id = get_option('pmpro_ccbill_flex_form_id');
-		$ccbill_salt = get_option('pmpro_ccbill_salt');
+		$ccbill_account_number = get_option('pmpro_nets_account_number');
+		$ccbill_subaccount_number = get_option('pmpro_nets_subaccount_number');
+		$ccbill_flex_form_id = get_option('pmpro_nets_flex_form_id');
+		$ccbill_salt = get_option('pmpro_nets_salt');
 
 		$ccbill_flex_forms_url = 'https://api.ccbill.com/wap-frontflex/flexforms/' . $ccbill_flex_form_id;
 
@@ -498,11 +498,11 @@ class PMProGateway_CCBill extends PMProGateway {
 		$qargs = array();
 		$qargs["action"]		= "cancelSubscription";
 		$qargs["clientSubacc"]	= '';
-		$qargs["usingSubacc"]	= get_option('pmpro_ccbill_subaccount_number');
+		$qargs["usingSubacc"]	= get_option('pmpro_nets_subaccount_number');
 		$qargs["subscriptionId"] = $order->subscription_transaction_id;
-		$qargs["clientAccnum"]	= get_option('pmpro_ccbill_account_number');
-		$qargs["username"]		= get_option('pmpro_ccbill_datalink_username'); //must be provided by CCBill
-		$qargs["password"]		= get_option('pmpro_ccbill_datalink_password'); //must be provided by CCBill
+		$qargs["clientAccnum"]	= get_option('pmpro_nets_account_number');
+		$qargs["username"]		= get_option('pmpro_nets_datalink_username'); //must be provided by CCBill
+		$qargs["password"]		= get_option('pmpro_nets_datalink_password'); //must be provided by CCBill
 
 		$cancel_link	= add_query_arg( $qargs, $sms_link );
 		$response		= wp_remote_get( $cancel_link );

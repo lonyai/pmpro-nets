@@ -15,45 +15,45 @@ define( "PMPRO_CCBILL_DIR", dirname( __FILE__ ) );
 /**
  * Loads rest of CCBill gateway if PMPro is active.
  */
-function pmpro_ccbill_load_gateway() {
+function pmpro_nets_load_gateway() {
 
 	if ( class_exists( 'PMProGateway' ) ) {
 		require_once( PMPRO_CCBILL_DIR . '/classes/class.pmprogateway_ccbill.php' );
-		add_action( 'wp_ajax_nopriv_ccbill-webhook', 'pmpro_wp_ajax_ccbill_webhook' );
-		add_action( 'wp_ajax_ccbill-webhook', 'pmpro_wp_ajax_ccbill_webhook' );
+		add_action( 'wp_ajax_nopriv_ccbill-webhook', 'pmpro_wp_ajax_nets_webhook' );
+		add_action( 'wp_ajax_ccbill-webhook', 'pmpro_wp_ajax_nets_webhook' );
 	}
 
 }
-add_action( 'plugins_loaded', 'pmpro_ccbill_load_gateway' );
+add_action( 'plugins_loaded', 'pmpro_nets_load_gateway' );
 
 /**
  * Callback for CCBill Webhook
  */
-function pmpro_wp_ajax_ccbill_webhook() {
+function pmpro_wp_ajax_nets_webhook() {
 
 	require_once( dirname(__FILE__) . "/webhook.php" );
 	exit;
 }
-add_action( 'wp_ajax_nopriv_ccbill-webhook', 'pmpro_wp_ajax_ccbill_webhook' );
-add_action( 'wp_ajax_ccbill-webhook', 'pmpro_wp_ajax_ccbill_webhook' );
+add_action( 'wp_ajax_nopriv_ccbill-webhook', 'pmpro_wp_ajax_nets_webhook' );
+add_action( 'wp_ajax_ccbill-webhook', 'pmpro_wp_ajax_nets_webhook' );
 
 /**
  * Runs only when the plugin is activated.
  *
  * @since 0.1.0
  */
-function pmpro_ccbill_admin_notice_activation_hook() {
+function pmpro_nets_admin_notice_activation_hook() {
 	// Create transient data.
 	set_transient( 'pmpro-ccbill-admin-notice', true, 5 );
 }
-register_activation_hook( __FILE__, 'pmpro_ccbill_admin_notice_activation_hook' );
+register_activation_hook( __FILE__, 'pmpro_nets_admin_notice_activation_hook' );
 
 /**
  * Admin Notice on Activation.
  *
  * @since 0.1.0
  */
-function pmpro_ccbill_admin_notice() {
+function pmpro_nets_admin_notice() {
 	// Check transient, if available display notice.
 	if ( get_transient( 'pmpro-ccbill-admin-notice' ) ) { 
 	?>
@@ -65,14 +65,14 @@ function pmpro_ccbill_admin_notice() {
 		delete_transient( 'pmpro-ccbill-admin-notice' );
 	}
 }
-add_action( 'admin_notices', 'pmpro_ccbill_admin_notice' );
+add_action( 'admin_notices', 'pmpro_nets_admin_notice' );
 
 /**
  * Function to add links to the plugin action links
  *
  * @param array $links Array of links to be shown in plugin action links.
  */
-function pmpro_ccbill_plugin_action_links( $links ) {
+function pmpro_nets_plugin_action_links( $links ) {
 	if ( current_user_can( 'manage_options' ) ) {
 		$new_links = array(
 			'<a href="' . get_admin_url( null, 'admin.php?page=pmpro-paymentsettings' ) . '">' . __( 'Configure CCBill', 'pmpro-ccbill' ) . '</a>',
@@ -81,7 +81,7 @@ function pmpro_ccbill_plugin_action_links( $links ) {
 	}
 	return $links;
 }
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'pmpro_ccbill_plugin_action_links' );
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'pmpro_nets_plugin_action_links' );
 
 /**
  * Function to add links to the plugin row meta
@@ -89,7 +89,7 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'pmpro_ccbill_
  * @param array  $links Array of links to be shown in plugin meta.
  * @param string $file Filename of the plugin meta is being shown for.
  */
-function pmpro_ccbill_plugin_row_meta( $links, $file ) {
+function pmpro_nets_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'pmpro-ccbill.php' ) !== false ) {
 		$new_links = array(
 			'<a href="' . esc_url( 'https://www.paidmembershipspro.com/add-ons/ccbill/' ) . '" title="' . esc_attr( __( 'View Documentation', 'pmpro-ccbill' ) ) . '">' . __( 'Docs', 'pmpro-ccbill' ) . '</a>',
@@ -99,7 +99,7 @@ function pmpro_ccbill_plugin_row_meta( $links, $file ) {
 	}
 	return $links;
 }
-add_filter( 'plugin_row_meta', 'pmpro_ccbill_plugin_row_meta', 10, 2 );
+add_filter( 'plugin_row_meta', 'pmpro_nets_plugin_row_meta', 10, 2 );
 
 /**
  * Load the languages folder for translations.

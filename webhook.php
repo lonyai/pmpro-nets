@@ -20,9 +20,9 @@ foreach ( $_REQUEST as $key => $value ) {
 }
 
 // Make sure that the response matches the account number saved to ensure it's for the same account/subscription.
-if ( empty( $response['clientAccnum'] ) || $response['clientAccnum'] !== get_option( 'pmpro_ccbill_account_number', true ) ) {
-	pmpro_ccbill_webhook_log( __( "There was an error processing your CCBill webhook. Account number doesn't match the one on record.", 'pmpro-ccbill' ) );
-	pmpro_ccbill_Exit();
+if ( empty( $response['clientAccnum'] ) || $response['clientAccnum'] !== get_option( 'pmpro_nets_account_number', true ) ) {
+	pmpro_nets_webhook_log( __( "There was an error processing your CCBill webhook. Account number doesn't match the one on record.", 'pmpro-ccbill' ) );
+	pmpro_nets_Exit();
 }
 
 // Full reference of event types and responses:
@@ -36,12 +36,12 @@ switch ( $event_type ) {
 		$morder->getMembershipLevel();
 		$morder->getUser();
 		
-		if ( pmpro_ccbill_ChangeMembershipLevel( $response, $morder ) ) {
+		if ( pmpro_nets_ChangeMembershipLevel( $response, $morder ) ) {
 			//Log the event
-			pmpro_ccbill_webhook_log( sprintf( __( "Checkout processed (%s) success!", 'pmpro_ccbill'), $morder->code ) );
+			pmpro_nets_webhook_log( sprintf( __( "Checkout processed (%s) success!", 'pmpro_ccbill'), $morder->code ) );
 		}
 		
-		pmpro_ccbill_Exit();
+		pmpro_nets_Exit();
 		
 	break;
 
@@ -55,35 +55,35 @@ switch ( $event_type ) {
 		$morder->getMembershipLevel();
 		$morder->getUser();
 		
-		if(pmpro_ccbill_RecurringCancel($morder))
-			pmpro_ccbill_Exit();
+		if(pmpro_nets_RecurringCancel($morder))
+			pmpro_nets_Exit();
 	break;
 
 	case 'RenewalSuccess':
 		$status = 'success';
-		pmpro_ccbill_AddRenewal( $response, $status );
-		pmpro_ccbill_Exit();
+		pmpro_nets_AddRenewal( $response, $status );
+		pmpro_nets_Exit();
 
 		break;
 
 	case 'RenewalFailure':
 		$status     = 'error';
-		pmpro_ccbill_AddRenewal( $response, $status );
-		pmpro_ccbill_Exit();
+		pmpro_nets_AddRenewal( $response, $status );
+		pmpro_nets_Exit();
 
 		break;
 
 	default:
-		do_action('pmpro_ccbill_other_webhook_events', $event_type);
-		pmpro_ccbill_Exit();
+		do_action('pmpro_nets_other_webhook_events', $event_type);
+		pmpro_nets_Exit();
 		
 	break;	
 }
 
-function pmpro_ccbill_ChangeMembershipLevel( $response, $morder ) {
+function pmpro_nets_ChangeMembershipLevel( $response, $morder ) {
 
 	//filter for level
-	$morder->membership_level = apply_filters( "pmpro_ccbill_handler_level", $morder->membership_level, $morder->user_id );
+	$morder->membership_level = apply_filters( "pmpro_nets_handler_level", $morder->membership_level, $morder->user_id );
 	
 	//set the start date to current_time('mysql') but allow filters (documented in preheaders/checkout.php)
 	$startdate = apply_filters( "pmpro_checkout_start_date", "'" . current_time('mysql') . "'", $morder->user_id, $morder->membership_level );
@@ -128,7 +128,7 @@ function pmpro_ccbill_ChangeMembershipLevel( $response, $morder ) {
 	
 	if ( ! empty( $pmpro_error ) ) {
 		echo $pmpro_error;
-		pmpro_ccbill_webhook_log($pmpro_error);
+		pmpro_nets_webhook_log($pmpro_error);
 	}
 
 	if ( pmpro_changeMembershipLevel($custom_level, $morder->user_id) !== false ) {
@@ -196,7 +196,7 @@ function pmpro_ccbill_ChangeMembershipLevel( $response, $morder ) {
 			$invoice = NULL;
 		}
 		
-		pmpro_ccbill_webhook_log( ( __( "CHANGEMEMBERSHIPLEVEL: ORDER: ", 'pmpro-ccbill' ) . var_export($morder, true) . "\n---\n"));
+		pmpro_nets_webhook_log( ( __( "CHANGEMEMBERSHIPLEVEL: ORDER: ", 'pmpro-ccbill' ) . var_export($morder, true) . "\n---\n"));
 		
 		$user = get_userdata($morder->user_id);
 
@@ -225,7 +225,7 @@ function pmpro_ccbill_ChangeMembershipLevel( $response, $morder ) {
  * @param  string $status
  * @return void
  */
-function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void {
+function pmpro_nets_AddRenewal( array $response, $status = 'success' ) : void {
 	$transaction_id  = $response['transactionId'];
 	$subscription_id = $response['subscriptionId'];
 	$timestamp       = $response['timestamp'];
@@ -243,12 +243,12 @@ function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void 
 		$old_order    = new MemberOrder();
 		$old_order->getLastMemberOrderBySubscriptionTransactionID( $subscription_id );
 
-		pmpro_ccbill_webhook_log( 'old_order: ' . json_encode( $old_order ) );
+		pmpro_nets_webhook_log( 'old_order: ' . json_encode( $old_order ) );
 
 		// Original subscription order cannot be found. Let's Bail.
 		if ( empty( $old_order ) || empty( $old_order->id ) ) {
-			pmpro_ccbill_webhook_log( sprintf( __( "Couldn't find the original subscription: (%s).", 'pmpro_ccbill' ), $subscription_id ) );
-			pmpro_ccbill_Exit();
+			pmpro_nets_webhook_log( sprintf( __( "Couldn't find the original subscription: (%s).", 'pmpro_ccbill' ), $subscription_id ) );
+			pmpro_nets_Exit();
 		}
 
 		$user_id = $old_order->user_id;
@@ -256,14 +256,14 @@ function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void 
 
 		// No user found for this order anymore.
 		if ( empty( $user ) ) {
-			pmpro_ccbill_webhook_log( sprintf( __( "Couldn't find the old order's user. Order ID (%s).", 'pmpro_ccbill' ), $old_order->id ) );
-			pmpro_ccbill_Exit();
+			pmpro_nets_webhook_log( sprintf( __( "Couldn't find the old order's user. Order ID (%s).", 'pmpro_ccbill' ), $old_order->id ) );
+			pmpro_nets_Exit();
 		}
 
 		$user->membership_level = pmpro_getMembershipLevelForUser( $user_id );
 
 		// Log the user email only for security reasons.
-		pmpro_ccbill_webhook_log( 'WP User Email: ' . json_encode( $user->user_email ) );
+		pmpro_nets_webhook_log( 'WP User Email: ' . json_encode( $user->user_email ) );
 
 		// Create a new order now.
 		$order = new MemberOrder();
@@ -296,8 +296,8 @@ function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void 
 			$pmproemail->sendBillingFailureAdminEmail(get_bloginfo("admin_email"), $order);
 
 			// Write to the log
-			pmpro_ccbill_webhook_log( sprintf( __( 'Renewal failed (%s) for subscription # (%s).', 'pmpro_ccbill' ), $response['failureReason'], $subscription_id ) );
-			pmpro_ccbill_Exit();
+			pmpro_nets_webhook_log( sprintf( __( 'Renewal failed (%s) for subscription # (%s).', 'pmpro_ccbill' ), $response['failureReason'], $subscription_id ) );
+			pmpro_nets_Exit();
 
 		} else {
 			$card_number    = $response['last4'];
@@ -325,7 +325,7 @@ function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void 
 			$email = new PMProEmail();
 			$email->sendInvoiceEmail( $user, $order );
 
-			pmpro_ccbill_webhook_log( sprintf( __( 'Order created (%1$s) for subscription # (%2$s).', 'pmpro_ccbill' ), $order->id, $subscription_id ) );
+			pmpro_nets_webhook_log( sprintf( __( 'Order created (%1$s) for subscription # (%2$s).', 'pmpro_ccbill' ), $order->id, $subscription_id ) );
 
 			do_action( 'pmpro_subscription_payment_completed', $order, $response );
 		}
@@ -334,14 +334,14 @@ function pmpro_ccbill_AddRenewal( array $response, $status = 'success' ) : void 
 		/**
 		 * Order exists, log and exit
 		 */
-		pmpro_ccbill_webhook_log( sprintf( __( 'An order with that payment ID (%s) already exists.', 'pmpro_ccbill' ), $transaction_id ) );
+		pmpro_nets_webhook_log( sprintf( __( 'An order with that payment ID (%s) already exists.', 'pmpro_ccbill' ), $transaction_id ) );
 	}
 	
-	pmpro_ccbill_Exit();
+	pmpro_nets_Exit();
 
 }
 
-function pmpro_ccbill_RecurringCancel( $morder ) {
+function pmpro_nets_RecurringCancel( $morder ) {
 
 	global $pmpro_error;
 	$worked = pmpro_cancelMembershipLevel( $morder->membership_level->id, $morder->user_id, 'inactive' );
@@ -354,7 +354,7 @@ function pmpro_ccbill_RecurringCancel( $morder ) {
 		$myemail = new PMProEmail();
 		$myemail->sendCancelAdminEmail( $morder->user, $morder->membership_level->id );
 		
-		pmpro_ccbill_webhook_log( sprintf( __( "Subscription Cancelled (%s)", 'pmpro-ccbill'), $morder->csubscription_transaction_id ) );
+		pmpro_nets_webhook_log( sprintf( __( "Subscription Cancelled (%s)", 'pmpro-ccbill'), $morder->csubscription_transaction_id ) );
 
 		return true;
 	} else {
@@ -365,14 +365,14 @@ function pmpro_ccbill_RecurringCancel( $morder ) {
 /*
 	Add message to webhook string
 */
-function pmpro_ccbill_webhook_log( $s ) {
+function pmpro_nets_webhook_log( $s ) {
 	global $logstr;
 	$logstr .= "\t" . $s . "\n";
 }
 /*
 	Output webhook log and exit;
 */
-function pmpro_ccbill_Exit( $redirect = false ) {
+function pmpro_nets_Exit( $redirect = false ) {
 	global $logstr;
 	//echo $logstr;
 	$logstr = var_export( $_REQUEST, true ) . sprintf( __( 'Logged On: %s', 'pmpro-ccbill' ), date_i18n("m/d/Y H:i:s") ) . "\n" . $logstr . "\n-------------\n";
