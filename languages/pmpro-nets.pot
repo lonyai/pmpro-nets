@@ -1,8 +1,8 @@
 # Copyright (C) 2024 Paid Memberships Pro
-# This file is distributed under the same license as the Paid Memberships Pro - CCBill Gateway plugin.
+# This file is distributed under the same license as the Paid Memberships Pro - Nets Gateway plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Paid Memberships Pro - CCBill Gateway 0.5.1\n"
+"Project-Id-Version: Paid Memberships Pro - Nets Gateway 0.5.1\n"
 "Report-Msgid-Bugs-To: info@paidmembershipspro.com\n"
 "Last-Translator: Paid Memberships Pro <info@paidmembershipspro.com>\n"
 "Language-Team: Paid Memberships Pro <info@paidmembershipspro.com>\n"
@@ -12,226 +12,226 @@ msgstr ""
 "POT-Creation-Date: 2024-08-14T08:18:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: pmpro-ccbill\n"
+"X-Domain: pmpro-nets\n"
 
 #. Plugin Name of the plugin
-#: pmpro-ccbill.php
-msgid "Paid Memberships Pro - CCBill Gateway"
+#: pmpro-nets.php
+msgid "Paid Memberships Pro - Nets Gateway"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: pmpro-ccbill.php
-msgid "https://www.paidmembershipspro.com/add-ons/ccbill"
+#: pmpro-nets.php
+msgid "https://www.paidmembershipspro.com/add-ons/nets"
 msgstr ""
 
 #. Description of the plugin
-#: pmpro-ccbill.php
-msgid "PMPro Gateway integration for CCBill"
+#: pmpro-nets.php
+msgid "PMPro Gateway integration for Nets"
 msgstr ""
 
 #. Author of the plugin
-#: pmpro-ccbill.php
+#: pmpro-nets.php
 msgid "Paid Memberships Pro"
 msgstr ""
 
 #. Author URI of the plugin
-#: pmpro-ccbill.php
+#: pmpro-nets.php
 msgid "https://www.paidmembershipspro.com"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:57
-msgid "CCBill"
+#: classes/class.pmprogateway_nets.php:57
+msgid "Nets"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:133
-msgid "CCBill Settings"
+#: classes/class.pmprogateway_nets.php:133
+msgid "Nets Settings"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:136
-msgid "Paid Memberships Pro: CCBill is currently in Beta."
+#: classes/class.pmprogateway_nets.php:136
+msgid "Paid Memberships Pro: Nets is currently in Beta."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:137
-msgid "Read the documentation on getting started with Paid Memberships Pro CCBill &raquo;"
+#: classes/class.pmprogateway_nets.php:137
+msgid "Read the documentation on getting started with Paid Memberships Pro Nets &raquo;"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:146
+#: classes/class.pmprogateway_nets.php:146
 msgid "Client Account Number"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:150
-msgid "Enter the client account number from CCBill"
+#: classes/class.pmprogateway_nets.php:150
+msgid "Enter the client account number from Nets"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:157
+#: classes/class.pmprogateway_nets.php:157
 msgid "Client SubAccount Number"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:161
+#: classes/class.pmprogateway_nets.php:161
 msgid "SubAccount Number You will be using"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:167
+#: classes/class.pmprogateway_nets.php:167
 msgid "Datalink Username"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:171
-msgid "Datalink username. This is different than your login username. Contact CCBill for more information."
+#: classes/class.pmprogateway_nets.php:171
+msgid "Datalink username. This is different than your login username. Contact Nets for more information."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:177
+#: classes/class.pmprogateway_nets.php:177
 msgid "Datalink Password"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:181
-msgid "Datalink pasword. This is different than your login password. Contact CCBill for more information."
+#: classes/class.pmprogateway_nets.php:181
+msgid "Datalink pasword. This is different than your login password. Contact Nets for more information."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:187
+#: classes/class.pmprogateway_nets.php:187
 msgid "Flex Form ID"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:191
-msgid "Enter the Flex Form ID from CCBill you will be using. Note you may need to have CCBill enable Dynamic Pricing"
+#: classes/class.pmprogateway_nets.php:191
+msgid "Enter the Flex Form ID from Nets you will be using. Note you may need to have Nets enable Dynamic Pricing"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:198
+#: classes/class.pmprogateway_nets.php:198
 msgid "Salt"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:202
-msgid "Salt value must be provided by CCBill"
+#: classes/class.pmprogateway_nets.php:202
+msgid "Salt value must be provided by Nets"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:207
-msgid "CCBill Webhook URL"
+#: classes/class.pmprogateway_nets.php:207
+msgid "Nets Webhook URL"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:210
-msgid "To fully integrate with CCBill, be sure to use the following for your Webhook URL"
+#: classes/class.pmprogateway_nets.php:210
+msgid "To fully integrate with Nets, be sure to use the following for your Webhook URL"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:246
-msgid "Check Out with CCBill"
+#: classes/class.pmprogateway_nets.php:246
+msgid "Check Out with Nets"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:246
+#: classes/class.pmprogateway_nets.php:246
 msgid "Submit and Confirm"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:515
-#: classes/class.pmprogateway_ccbill.php:524
-msgid "Cancellation of subscription id: %s may have failed. Check CCBill Admin to confirm cancellation"
+#: classes/class.pmprogateway_nets.php:515
+#: classes/class.pmprogateway_nets.php:524
+msgid "Cancellation of subscription id: %s may have failed. Check Nets Admin to confirm cancellation"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:519
-#: classes/class.pmprogateway_ccbill.php:527
-#: classes/class.pmprogateway_ccbill.php:539
-msgid " CCBill Subscription Cancel Error"
+#: classes/class.pmprogateway_nets.php:519
+#: classes/class.pmprogateway_nets.php:527
+#: classes/class.pmprogateway_nets.php:539
+msgid " Nets Subscription Cancel Error"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:536
-msgid "Cancellation of subscription id: %s may have failed. Check CCBill Admin to confirm cancellation. Error: %s"
+#: classes/class.pmprogateway_nets.php:536
+msgid "Cancellation of subscription id: %s may have failed. Check Nets Admin to confirm cancellation. Error: %s"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:554
+#: classes/class.pmprogateway_nets.php:554
 msgid "The requested action failed."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:555
+#: classes/class.pmprogateway_nets.php:555
 msgid "The arguments provided to authenticate the merchant were invalid or missing."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:556
+#: classes/class.pmprogateway_nets.php:556
 msgid "The subscription id provided was invalid or the subscription type is not supported by the requested action."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:557
+#: classes/class.pmprogateway_nets.php:557
 msgid "No record was found for the given subscription."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:558
+#: classes/class.pmprogateway_nets.php:558
 msgid "The given subscription was not for the account the merchant was authenticated on."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:559
+#: classes/class.pmprogateway_nets.php:559
 msgid "The arguments provided for the requested action were invalid or missing."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:560
+#: classes/class.pmprogateway_nets.php:560
 msgid "The requested action was invalid"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:561
+#: classes/class.pmprogateway_nets.php:561
 msgid "There was an internal error or a database error and the requested action could not complete."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:562
+#: classes/class.pmprogateway_nets.php:562
 msgid "The IP Address the merchant was attempting to authenticate on was not in the valid range."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:563
+#: classes/class.pmprogateway_nets.php:563
 msgid "The merchant’s account has been deactivated for use on the Datalink system or the merchant is not permitted to perform the requested action"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:564
+#: classes/class.pmprogateway_nets.php:564
 msgid "The merchant has not been set up to use the Datalink system."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:565
+#: classes/class.pmprogateway_nets.php:565
 msgid "Subscription is not eligible for a discount, recurring price less than $5.00."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:566
+#: classes/class.pmprogateway_nets.php:566
 msgid "The merchant has unsuccessfully logged into the system 3 or more times in the last hour. The merchant should wait an hour before attempting to login again and is advised to review the login information."
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:567
+#: classes/class.pmprogateway_nets.php:567
 msgid "Merchant over refund threshold"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:568
+#: classes/class.pmprogateway_nets.php:568
 msgid "Merchant over void threshold"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:569
+#: classes/class.pmprogateway_nets.php:569
 msgid "Transaction limit reached"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:570
+#: classes/class.pmprogateway_nets.php:570
 msgid "Purchase limit reached"
 msgstr ""
 
-#: classes/class.pmprogateway_ccbill.php:577
+#: classes/class.pmprogateway_nets.php:577
 msgid "Error Code Unknown"
 msgstr ""
 
-#: pmpro-ccbill.php:61
-msgid "Thank you for activating the Paid Memberships Pro: CCBill Add On. <a href=\"%s\">Visit the payment settings page</a> to configure the CCBill Payment Gateway."
+#: pmpro-nets.php:61
+msgid "Thank you for activating the Paid Memberships Pro: Nets Add On. <a href=\"%s\">Visit the payment settings page</a> to configure the Nets Payment Gateway."
 msgstr ""
 
-#: pmpro-ccbill.php:78
-msgid "Configure CCBill"
+#: pmpro-nets.php:78
+msgid "Configure Nets"
 msgstr ""
 
-#: pmpro-ccbill.php:95
+#: pmpro-nets.php:95
 msgid "View Documentation"
 msgstr ""
 
-#: pmpro-ccbill.php:95
+#: pmpro-nets.php:95
 msgid "Docs"
 msgstr ""
 
-#: pmpro-ccbill.php:96
+#: pmpro-nets.php:96
 msgid "Visit Customer Support Forum"
 msgstr ""
 
-#: pmpro-ccbill.php:96
+#: pmpro-nets.php:96
 msgid "Support"
 msgstr ""
 
 #: webhook.php:24
-msgid "There was an error processing your CCBill webhook. Account number doesn't match the one on record."
+msgid "There was an error processing your Nets webhook. Account number doesn't match the one on record."
 msgstr ""
 
 #: webhook.php:199
@@ -247,5 +247,5 @@ msgid "Logged On: %s"
 msgstr ""
 
 #: webhook.php:393
-msgid "CCBill Webhook Log"
+msgid "Nets Webhook Log"
 msgstr ""
