@@ -1,6 +1,8 @@
 <?php
 
 //load classes init method
+use JetBrains\PhpStorm\NoReturn;
+
 add_action('init', array('PMProGateway_Nets', 'init'));
 add_filter('pmpro_is_ready', array( 'PMProGateway_Nets', 'pmpro_is_nets_ready' ), 999, 1 );
 
@@ -17,7 +19,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function init() {
+	static function init(): void
+    {
 
 		//make sure Nets is a gateway option
 		add_filter( 'pmpro_gateways', array( 'PMProGateway_Nets', 'pmpro_gateways' ));
@@ -65,7 +68,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function getGatewayOptions() {
+	static function getGatewayOptions(): array
+    {
 
 		$options = array(
 			'sslseal',
@@ -91,7 +95,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function pmpro_payment_options( $options ) {
+	static function pmpro_payment_options( $options ): array
+    {
 		//get nets options
 		$nets_options = PMProGateway_Nets::getGatewayOptions();
 
@@ -104,7 +109,8 @@ class PMProGateway_Nets extends PMProGateway {
 	/**
 	 * Check if all fields are complete
 	 */
-	static function pmpro_is_nets_ready( $ready ){
+	static function pmpro_is_nets_ready( $ready ): bool
+    {
 
 		if ( get_option('pmpro_nets_account_number') == "" ||
 		get_option('pmpro_nets_subaccount_number') == "" ||
@@ -126,7 +132,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function pmpro_payment_option_fields( $values, $gateway ) {
+	static function pmpro_payment_option_fields( $values, $gateway ): void
+    {
 	?>
 	<tr class="pmpro_settings_divider gateway gateway_nets" <?php if( $gateway != "nets" ) { ?>style="display: none;"<?php } ?> >
 		<td colspan="2">
@@ -235,7 +242,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 * @since 1.8
 	 */
-	static function pmpro_checkout_default_submit_button( $show ) {
+	static function pmpro_checkout_default_submit_button( $show ): bool
+    {
 
 		global $gateway, $pmpro_requirebilling;
 
@@ -255,7 +263,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 *
 	 *
 	 */
-	static function pmpro_checkout_before_change_membership_level( $user_id, $morder ) {
+	static function pmpro_checkout_before_change_membership_level( $user_id, $morder ): void
+    {
 
 		global $wpdb, $discount_code_id;
 
@@ -288,7 +297,8 @@ class PMProGateway_Nets extends PMProGateway {
 
 	}
 
-	function get_digest($initial_price, $initial_period, $currency_code = null, $recurring_price = null, $recurring_period = null, $number_of_rebills = null, $salt = null ) {
+	function get_digest($initial_price, $initial_period, $currency_code = null, $recurring_price = null, $recurring_period = null, $number_of_rebills = null, $salt = null ): string
+    {
 
 		// Defaults.
 		if( empty( $currency_code ) ) {
@@ -321,7 +331,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 * Process checkout.
 	 *
 	 */
-	function process( &$order ) {
+	function process( &$order ): bool
+    {
 
 		if ( empty( $order->code ) ) {
 			$order->code = $order->getRandomCode();
@@ -338,7 +349,8 @@ class PMProGateway_Nets extends PMProGateway {
 		return true;
 	}
 
-	static function get_currency_code( $currency_abbr = null ) {
+	static function get_currency_code( $currency_abbr = null ): bool|string
+    {
 
 		global $pmpro_currency;
 
@@ -378,7 +390,8 @@ class PMProGateway_Nets extends PMProGateway {
 		return $currency_code;
 	}
 
-	function sendToNets( &$order ) {
+	#[NoReturn] function sendToNets(&$order ): void
+    {
 
 		$first_name	= pmpro_getParam('bfirstname', 'REQUEST');
 		$last_name	= pmpro_getParam('blastname', 'REQUEST');
@@ -482,7 +495,8 @@ class PMProGateway_Nets extends PMProGateway {
 		exit;
 	}
 
-	function cancel( &$order ) {
+	function cancel( &$order ): object|bool
+    {
 
 		//no matter what happens below, we're going to cancel the order in our system
 
@@ -582,7 +596,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 * @param object $order The order object.
 	 * @return int The initial period.
 	 */
-	private function get_initialPeriod( $order ) {
+	private function get_initialPeriod( $order ): int
+    {
 		$level = $order->getMembershipLevel();
 		if ( pmpro_isLevelRecurring( $level ) ) {
 			// For recurring payments, period is billing period.
@@ -611,7 +626,8 @@ class PMProGateway_Nets extends PMProGateway {
 	 * @param MemberOrder $order
 	 * @return string $calculated_date The calculated date of expiration date from todays date. (i.e. 2024-01-31)
 	 */
-	public function calculate_expiration_date( $level ) {
+	public function calculate_expiration_date( $level ): string
+    {
 		//Convert $level->expiration_period + $level->expiration_number to a date.
 		$expiration_date = date( "Y-m-d", strtotime( "+ " . $level->expiration_number . " " . $level->expiration_period, current_time( "timestamp" ) ) );
 		return $expiration_date;
